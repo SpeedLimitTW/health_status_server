@@ -103,6 +103,7 @@ func computeHealth(m *melody.Melody) {
 		json :=
 			`{
 	health : %d,
+	
 }`
 		m.Broadcast([]byte(fmt.Sprintf(json, healthDangerValue)))
 	}
