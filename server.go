@@ -23,10 +23,12 @@ type status struct {
 	phone_using bool
 }
 
+var state status = status{
+	phone_using: false,
+}
+
 func main() {
-	state := status{
-		phone_using: false,
-	}
+
 	r := gin.Default()
 	m := melody.New()
 
@@ -43,6 +45,7 @@ func main() {
 		}()
 	})
 
+	//http://localhost:5000/status/phone?now_using=1
 	r.GET("/status/phone", func(c *gin.Context) {
 		now_using := c.Query("now_using")
 
@@ -66,6 +69,8 @@ func main() {
 		}
 	}()
 
+	go computeHealth(m)
+
 	r.Run(":5000")
 }
 
@@ -77,4 +82,38 @@ func typing_message(m *melody.Melody) {
 	m.Broadcast([]byte(text))
 	fmt.Println("You just send the message.")
 
+}
+
+func computeHealth(m *melody.Melody) {
+	var healthDangerValue int8 = 0
+
+	for {
+		//initialization
+		healthDangerValue = 0
+
+		//wait for sleep
+		time.Sleep(500 * time.Millisecond)
+
+		//compute add danger value of percent.
+		if state.phone_using {
+			healthDangerValue += 40
+		}
+
+		//send back to browser
+		json :=
+			`{
+	health : %d,
+}`
+		m.Broadcast([]byte(fmt.Sprintf(json, healthDangerValue)))
+	}
+}
+
+func checkPercent(v int) {
+	if v < 0 {
+		v = 0
+	}
+
+	if v > 100 {
+		v = 100
+	}
 }
