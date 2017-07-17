@@ -7,8 +7,58 @@
     <title>Document</title>
 </head>
 <body>
+
+	phone_using<br>
+	rotation<br>
+	speed_up<br>
+	steering_wheel<br>
+	drive_at_night<br>
+    door_open<br><br>
+
+    http://localhost:5000/status?now_using=phone_using&sw=0 or 1
+
+    <br>
+    <br>
+    
+    <div>
+        <p>Playing Phone</p><br>
+        <button style=" width: 50%; height: 45px; " onclick="fetch('/status?now_using=phone_using&sw=1')">On</button><br>
+        <button style=" width: 50%; height: 45px; " onclick="fetch('/status?now_using=phone_using&sw=0')">Off</button>
+    </div>
+    <br><br><br><br>
+    <div>
+        <p>左轉右轉</p><br>
+        <button style=" width: 50%; height: 45px; " onclick="fetch('/status?now_using=rotation&sw=1')">On</button><br>
+        <button style=" width: 50%; height: 45px; " onclick="fetch('/status?now_using=rotation&sw=0')">Off</button>
+    </div>
+    <br><br><br><br>
+    <div>
+        <p>速度加快</p><br>
+        <button style=" width: 50%; height: 45px; " onclick="fetch('/status?now_using=speed_up&sw=1')">On</button><br>
+        <button style=" width: 50%; height: 45px; " onclick="fetch('/status?now_using=speed_up&sw=0')">Off</button>
+    </div>
+    <br><br><br><br>
+    <div>
+        <p>方向盤不穩</p><br>
+        <button style=" width: 50%; height: 45px; " onclick="fetch('/status?now_using=steering_wheel&sw=1')">On</button><br>
+        <button style=" width: 50%; height: 45px; " onclick="fetch('/status?now_using=steering_wheel&sw=0')">Off</button>
+    </div>
+    <br><br><br><br>
+    <div>
+        <p>夜間行駛</p><br>
+        <button style=" width: 50%; height: 45px; " onclick="fetch('/status?now_using=drive_at_night&sw=1')">On</button><br>
+        <button style=" width: 50%; height: 45px; " onclick="fetch('/status?now_using=drive_at_night&sw=0')">Off</button>
+    </div>
+    <br><br><br><br>
+    <div>
+        <p>車門打開</p><br>
+        <button style=" width: 50%; height: 45px; " onclick="fetch('/status?now_using=door_open&sw=1')">On</button><br>
+        <button style=" width: 50%; height: 45px; " onclick="fetch('/status?now_using=door_open&sw=0')">Off</button>
+    </div>
+
+
 <script type="text/javascript">
-    const server_url = "ws://localhost:5000/ws";
+    const server_url = "ws://192.168.43.121:5000/ws";
 
     let cno = new WebSocket(server_url);
 
@@ -17,8 +67,10 @@
     }
 
     cno.onmessage = (msg)=>{
+        isPong = true
         console.log(msg.data);
     }
+
 </script>
 </body>
 </html>
